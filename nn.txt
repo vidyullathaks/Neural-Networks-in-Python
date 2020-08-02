@@ -1,0 +1,74 @@
+Nn notes :
+
+The ReLU is unbounded, not normalized with other units, and exclusive.“Not normalized” implies the values can be
+literally anything, an output of [12, 99, 318] is without context,and “exclusive” implies each output is independent from the others. 
+
+To address this lack of context, the softmax activation on the output layer can take in non-normalized inputs and 
+produce a normalized distribution of probabilities for our classes.
+
+In the case of classification, what we ’re actually wanting to see is a prediction of which class the network thinks the input represents. 
+
+This distribution returned by the softmax activation function represents “confidence” scores for each class, and will all add up to 1.
+
+The loss function is the algorithm that quantifies how wrong a model is.
+example : cross entropy(one of the loss functions) = y(actual distribution)/ y'(predicted distribution) ie, "-log(correct_class_confidence)"
+
+log example = e^x = b ; 
+			  x = log(b) ie,"np.log(b)"
+
+The measure of the impact that x has on y is slope, where slope = ( (y[1]-y[0]) / (x[1]-x[0]) ) ie, ( Change in y/Change in x )
+But for a curve, there is no single slope.
+Numerical differentiation — rather than calculating the slope of the tangent line using two infinitely close points, 
+we’ve calculated the slope of a tangent line made from two points that were “sufficiently close.”
+Tangent function for st. lint =  y = mx+b. (m = slope/ apx_derivative, x = input, b = y-intercept/ bias)
+
+The partial derivative measures how much impact a single variable has on a function’s output.
+
+The next type of derivative that we are going to explore is the derivative of the max() function:
+f(x, y) = max(x, y)   →  xf(x, y) =xmax(x, y) = 1(x >= y)
+
+The max function returns whichever input is the biggest. 
+We know that xx = 1, so the derivative of this function with respect to x equals 1 if x is greater than y; 
+otherwise, it’s 0 as xy = 0. We can denote that as 1(x >= y), which means 1 if the condition is being met, and 0 otherwise.
+
+We need to slightly raise the weights and biases that decrease the output of the loss function along with slightly lowering the weights and biases 
+that increase the output of the loss function
+As we consider how to adjust weights intelligently, we now know that we can calculate each weight and bias’ impact on the loss function.
+We use learning rate — a value that affects how quickly to adjust parameters.
+We adjust the weights and biases in order to decrease the loss.
+
+Doubt : 
+9th chapter 14th page ?
+10th chapter 26th page - the steepest descent may point towards a local minimum.So this step may decrease loss for that update but might not get us out of the local minimum ?
+And also self decay concept and momentum ?
+print(f') ?
+
+We will repeatedly perform a forward pass, backward pass, and optimization until we reach some stopping point. 
+Each full pass through all of the training data is called an epoch.
+
+Stochastic Gradient Descent with Momentum
+Momentum uses the previous update’s direction to influence the next update’s direction, minimizing the chances of getting stuck
+
+Adaptive gradient = The idea here is to allow the model to value certain features more highly than others. 
+Overall, the impact of AdaGrad is the learning rates for parameters with smaller gradients are increased, 
+while the parameters with largerbigger gradients have their learning rates decreased.
+Epsilon in the formula is a hyperparameter (pre-training control knob setting) preventing division by 0.
+
+RMSProp = Root Mean Square Propagation
+RMSProp adds a mechanism similar to momentum but also adds a per-parameter adaptive learning rate, so the learning rate changes are smoother.
+Rho is the cache memory decay rate.  
+
+Adam = Adaptive Moment
+The Adam optimizer renames the rho hyperparamoeter to beta_2 and momentum to beta_1
+
+Test dataset should only be used as unseen data, not informing the model in any way, other than to test performance.
+Fewer neurons you have, the less chance you have that the data are being memorized. 
+Fewer neurons can mean it’s easier for a neural network to generalize (actually learn the meaning of the data) compared to memorizing the data.
+
+Hyperparameter tuning can be performed using yet another dataset called validation data.
+
+Data preprocessing: 
+It might include the processes like standardization, scaling, variance scaling, mean removal, non-linear transformations, scaling to outliers.
+
+L1 regularization’s penalty is the sum of all the absolute values for the weights and biases. Linear nature, penalizes small weights more.
+L2 regularization’s penalty is the sum of the squared weights and biases. Non-linear approach, penalizes larger weights and biases
